@@ -1,0 +1,92 @@
+package com.example.cs2336asg6;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Border;
+import javafx.stage.Stage;
+//extra essential imports
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import java.io.IOException;
+
+/*
+   Assignment 6 - Simple Calculator using JavaFX
+   This program uses JavaFX to create a simple calculator.
+   In the program, different elements of JavaFX are used to create a calculator
+   which performs the four basic operations (add, subtract, multiply, and divide).
+
+   The user enters the 2 values they want to compute into 2 text fields, and then press the
+   button corresponding to which operation they wish to perform. The answer is then
+   outputted in a label.
+   A standard border pane is used for the GUI of the calculator.
+
+   Written by Anish Gajera for CS 2336.005, Assignment 6, starting November 29, 2021.
+   Net ID: AAG190007
+*/
+
+public class CS2336Asg6_AAG190007 extends Application
+{
+   //variables which will hold the 2 values you want to perform computation on and the answer
+   double val1, val2, ans = 0;
+
+   @Override
+   public void start(Stage stage) throws IOException
+   {
+       //pane (numPane), center position, spacing of 10
+       HBox numPane = new HBox();
+       numPane.setAlignment(Pos.CENTER);
+       numPane.setSpacing(10);
+
+       //create label and text field for the first and second values to be entered and for the answer
+       Label value1 = new Label("1st Number: ");
+       TextField tvalue1 = new TextField();
+       Label value2 = new Label("2nd Number: ");
+       TextField tvalue2 = new TextField();
+       Label answer = new Label("Answer: ");
+       TextField tanswer = new TextField();
+
+       //number pane to add all elements into
+       numPane.getChildren().addAll(value1, value2, answer, tvalue1, tvalue2, tanswer);
+
+       //create 4 basic operations buttons (add, subtract, multiply, divide)
+       //add
+       Button AddButton = new Button("Add");
+       AddButton.setOnAction(e -> { ans = Double.parseDouble(tvalue1.getText()) + Double.parseDouble(tvalue2.getText()); tanswer.setText(ans + "");});
+       //subtract
+       Button SubtractButton = new Button("Subtract");
+       SubtractButton.setOnAction(e -> { ans = Double.parseDouble(tvalue1.getText()) - Double.parseDouble(tvalue2.getText()); tanswer.setText(ans + "");});
+       //multiply
+       Button MultiplyButton = new Button("Multiply");
+       MultiplyButton.setOnAction(e -> { ans = Double.parseDouble(tvalue1.getText()) * Double.parseDouble(tvalue2.getText()); tanswer.setText(ans + "");});
+       //divide
+       Button DivideButton = new Button("Divide");
+       DivideButton.setOnAction(e -> { ans = Double.parseDouble(tvalue1.getText()) / Double.parseDouble(tvalue2.getText()); tanswer.setText(ans + "");});
+
+       //pane for the user (GUI user will see), contains all buttons on it
+       HBox userPane = new HBox();
+       userPane.setSpacing(10);
+       userPane.setAlignment(Pos.CENTER);
+       userPane.getChildren().addAll(AddButton, SubtractButton, MultiplyButton, DivideButton);
+
+       //border pane for the overall border of the calculator
+       BorderPane borderPane = new BorderPane(numPane);
+       BorderPane.setMargin(userPane, new Insets(10, 10, 10, 10));
+       borderPane.setBottom(userPane);
+       BorderPane.setMargin(userPane, new Insets(10, 10, 10, 10));
+       //set the stage
+       stage.setScene(new Scene(borderPane, borderPane.getPrefWidth(), borderPane.getPrefWidth()));
+       stage.setTitle("Basic Calculator");
+       stage.show();
+   }
+   //main method, not really required unless needed in JavaFX
+   public static void main(String[] args)
+   {
+       Application.launch(args);
+   }
+}
